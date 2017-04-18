@@ -91,6 +91,11 @@ $(function() {
               .merge(bars)
               .on('mouseover', tip.show)
               .on('mouseout', tip.hide)
+              .attr('width', 0)
+              .transition()
+              .delay(function(d, i) {
+                return i * 50;
+              })
               .attr('width', xScale.bandwidth())
               .attr('y', function(d) {
                   return yScale(d.percent);
@@ -98,7 +103,7 @@ $(function() {
               .attr('height', function(d) {
                   return drawHeight - yScale(d.percent);
               });
-
+            bars.exit().remove();
         }
 
         var filterData = function() {
@@ -128,7 +133,7 @@ $(function() {
           xAxisLabel.call(xAxis);
 
           // Render (call) your yAxis in your yAxisLabel
-          yAxisLabel.call(yAxis);
+          yAxisLabel.transition().duration(500).call(yAxis);
 
           // Update xAxisText and yAxisText labels
           xAxisText.text('State');
